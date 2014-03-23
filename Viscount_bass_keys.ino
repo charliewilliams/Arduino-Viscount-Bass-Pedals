@@ -11,7 +11,7 @@ Wireless TX/RX on 0-1
 #include <MozziGuts.h>
 #include <Oscil.h>
 #include <Sample.h> // Sample template
-#include <samples/burroughs1_18649_int8.h> // a converted audio sample included in the Mozzi download
+#include <samples/burroughs1_18649_int8.h> // a converted audio sample
 #include <tables/sin2048_int8.h> // sine table for oscillator
 
 // use: Oscil <table_size, update_rate> oscilName (wavetable), look in .h file of table #included above
@@ -26,15 +26,6 @@ const int LED_G = 10;
 const int LED_B = 11;
 const int WI_TX = 1;
 const int WI_RX = 0;
-
-// use: Sample <table_size, update_rate> SampleName (wavetable)
-//Sample <BURROUGHS1_18649_NUM_CELLS, AUDIO_RATE> aSample(BURROUGHS1_18649_DATA);
-//float recorded_pitch = (float) BURROUGHS1_18649_SAMPLERATE / (float) BURROUGHS1_18649_NUM_CELLS;
-
-void setup() {
-  Serial.begin(115200); // set up the Serial output so we can look at the piezo values
-  startMozzi();
-}
 
 // Duemilanove pins are simple
 void readPins() {
@@ -74,6 +65,8 @@ int freqFromNoteNum(int noteNum) {
   return freqs[noteNum] * octave;
 }
 
+// Duemilanove pin setup (i.e. no wireless)
+
 int noteNumFromPin(int pin) {
   if (pin < 3) { //0 1 2 = C D E
     return pin * 2;
@@ -93,6 +86,11 @@ int noteNumFromAnalogPin(int pin) {
 }
 
 // runloop
+
+void setup() {
+  Serial.begin(115200); // Debug only
+  startMozzi();
+}
 
 void updateControl() {
   readPins();

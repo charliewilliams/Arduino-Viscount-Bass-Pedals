@@ -15,11 +15,11 @@ Wireless TX/RX on 0-1
 #include <tables/sin2048_int8.h> // sine table for oscillator
 
 // use: Oscil <table_size, update_rate> oscilName (wavetable), look in .h file of table #included above
-Oscil <SIN2048_NUM_CELLS, AUDIO_RATE> aSin(SIN2048_DATA);
-
+Oscil <SIN2048_NUM_CELLS, AUDIO_RATE> s0(SIN2048_DATA), s1(SIN2048_DATA), s2(SIN2048_DATA), s3(SIN2048_DATA), s4(SIN2048_DATA), s5(SIN2048_DATA), s6(SIN2048_DATA), s7(SIN2048_DATA), s8(SIN2048_DATA), s9(SIN2048_DATA), s10(SIN2048_DATA), s11(SIN2048_DATA), s12(SIN2048_DATA);
+Oscil <SIN2048_NUM_CELLS, AUDIO_RATE>sins[13] = {s0, s1, s2, s3, s4, s5, s6, s7, s8};
 float freqs[13] = {32.703, 34.648, 36.708, 38.891, 41.203, 43.654, 46.249, 48.999, 51.913, 55.000, 58.270, 61.735, 64.406};
 int octave = 2;
-float freq;
+Oscil <SIN2048_NUM_CELLS, AUDIO_RATE> monoSin(SIN2048_DATA);
 
 const int LED_R = 9;
 const int LED_G = 10;
@@ -36,7 +36,6 @@ void readPins() {
     int pinValue = digitalRead(i);
     if (pinValue) {
       noteNum = noteNumFromPin(i);
-      break;
     }
   }
 
@@ -52,7 +51,7 @@ void readPins() {
     }
   }
 
-  aSin.setFreq(freqFromNoteNum(noteNum));
+  monoSin.setFreq(freqFromNoteNum(noteNum));
 }
 
 // conversions
@@ -88,18 +87,34 @@ int noteNumFromAnalogPin(int pin) {
 // runloop
 
 void setup() {
+  for (int i = 0; i < 13; i++) {
+    sins[i].setFreq(freqs[i]);
+  }
   Serial.begin(115200); // Debug only
   startMozzi();
 }
 
 void updateControl() {
+  updateLED();
   readPins();
 }
 
 int updateAudio() {
-  return aSin.next();
+  return monoSin.next();
 }
 
 void loop() {
   audioHook();
+}
+
+// RGB LED madness
+
+int r, g, b; // LED
+void updateLED() {
+  r++;
+  g += 2;
+  b -= 3;
+  analogWrite(LED_R, r);
+  analogWrite(LED_G, g);
+  analogWrite(LED_B, b);
 }

@@ -33,23 +33,34 @@ void readPins() {
   int noteNum = 0;
   // white keys
   for (int i = 0; i < 8; i++) {
-    int pinValue = digitalRead(i);
-    if (pinValue) {
-      noteNum = noteNumFromPin(i);
-    }
-  }
+    int pinValue = analogRead(i) / 1000;
+    Serial.print(i);
+    Serial.print(":");
+    Serial.print(pinValue);
+    Serial.print(" ");
 
-  if (!noteNum) {
-    // black keys
-    for (int i = 0; i < 6; i++) {
-      int pinValue = mozziAnalogRead(i);
-      pinValue = stateFromAnalogValue(pinValue);
-      if (pinValue) {
-        noteNum = noteNumFromAnalogPin(i);
-        break;
-      }
-    }
+    //    if (pinValue == HIGH) {
+    //      noteNum = noteNumFromPin(i);
+    //      break;
+    //    }
   }
+  Serial.println("");
+
+  //  if (!noteNum) {
+  //    // black keys
+  //    for (int i = 0; i < 6; i++) {
+  //      int pinValue = mozziAnalogRead(i);
+  //      pinValue = stateFromAnalogValue(pinValue);
+  //      if (pinValue) {
+  //        noteNum = noteNumFromAnalogPin(i);
+  //        break;
+  //      }
+  //    }
+  //  }
+  //
+  //  if (noteNum) {
+  //   Serial.println(noteNum);
+  //  }
 
   monoSin.setFreq(freqFromNoteNum(noteNum));
 }
@@ -73,7 +84,10 @@ int noteNumFromPin(int pin) {
   else if (pin < 7) { // 3 4 5 6 = F G A B
     return pin * 2 + 1;
   }
-  else return 12; // 7 = C
+  else if (pin == 7) {
+    return 12; // 7 = C
+  }
+  return 0;
 }
 
 int noteNumFromAnalogPin(int pin) {
@@ -87,6 +101,24 @@ int noteNumFromAnalogPin(int pin) {
 // runloop
 
 void setup() {
+
+  for (int i = 0; i < 7; i++) {
+    pinMode(i, INPUT);
+  }
+  
+  pinMode(7, OUTPUT);
+  
+  int value = 1024;
+
+  analogWrite(A0, value);
+  analogWrite(A1, value);
+  analogWrite(A2, value);
+  analogWrite(A3, value);
+  analogWrite(A4, value);
+  analogWrite(A5, value);
+  analogWrite(A6, value);
+  analogWrite(A7, 0);
+
   for (int i = 0; i < 13; i++) {
     sins[i].setFreq(freqs[i]);
   }
@@ -117,4 +149,7 @@ void updateLED() {
   analogWrite(LED_R, r);
   analogWrite(LED_G, g);
   analogWrite(LED_B, b);
+  //  Serial.write("RGB: ");
+  //  Serial.write(r);
+  //  Serial.write("\n");// + r + " " + g + " " + b);
 }

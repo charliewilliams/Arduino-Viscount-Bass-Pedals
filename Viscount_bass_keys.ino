@@ -32,19 +32,32 @@ void readPins() {
 
   int noteNum = 0;
   // white keys
-  for (int i = 0; i < 8; i++) {
-    int pinValue = analogRead(i) / 1000;
-    Serial.print(i);
-    Serial.print(":");
-    Serial.print(pinValue);
-    Serial.print(" ");
 
-    //    if (pinValue == HIGH) {
-    //      noteNum = noteNumFromPin(i);
-    //      break;
-    //    }
+  static int i = 1;
+
+  int pinValue = analogRead(i);
+  String string = "";
+  string += i;
+  string += ":";
+  string += pinValue;
+  string += "    ";
+  string += "   ";
+
+  if (pinValue < 500) {
+    Serial.print(string);
+  } else {
+    Serial.print("        ");
   }
-  Serial.println("");
+
+  if (i++ >= 8) {
+    Serial.println("");
+    i = 1;
+  }
+
+  //    if (pinValue == HIGH) {
+  //      noteNum = noteNumFromPin(i);
+  //      break;
+  //    }
 
   //  if (!noteNum) {
   //    // black keys
@@ -105,9 +118,9 @@ void setup() {
   for (int i = 0; i < 7; i++) {
     pinMode(i, INPUT);
   }
-  
+
   pinMode(7, OUTPUT);
-  
+
   int value = 1024;
 
   analogWrite(A0, value);
@@ -117,7 +130,7 @@ void setup() {
   analogWrite(A4, value);
   analogWrite(A5, value);
   analogWrite(A6, value);
-  analogWrite(A7, 0);
+  analogWrite(A7, 1024 - value);
 
   for (int i = 0; i < 13; i++) {
     sins[i].setFreq(freqs[i]);

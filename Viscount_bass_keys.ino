@@ -1,6 +1,5 @@
 
-//#define AUDIO_MODE HIFI
-
+#include <ADC.h>
 #include <MozziGuts.h>
 
 #define CONTROL_RATE 64

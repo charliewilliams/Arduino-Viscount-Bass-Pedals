@@ -4,17 +4,19 @@
 
 #include <ADSR.h>
 
+#define M_LERP_RATE 64
+
 long debounceDelay = 50;    // the debounce time; increase if the output flickers
 bool pedalIsDownForNote[NUM_KEYS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 bool debounceTimes[NUM_KEYS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-ADSR <CONTROL_RATE> envelope[NUM_KEYS];
+ADSR <CONTROL_RATE, M_LERP_RATE> envelope[NUM_KEYS];
 
 
 void setupControl() {
 
   for (int i = 0; i < NUM_KEYS; i++) {
 
-    ADSR <CONTROL_RATE> env;// = ADSR<CONTROL_RATE>();
+    ADSR <CONTROL_RATE, M_LERP_RATE> env;// = ADSR<CONTROL_RATE>();
 
     env.setAttackLevel(255);
     env.setDecayLevel(127);
@@ -34,7 +36,7 @@ void updateControl() {
 
   for (int i = 0; i < NUM_KEYS; i++) {
 
-    ADSR <CONTROL_RATE> env = envelope[i];
+    ADSR <CONTROL_RATE, M_LERP_RATE> env = envelope[i];
     env.update(); // should this be inside the 'else' below?
 
     bool oldValue = pedalIsDownForNote[i];

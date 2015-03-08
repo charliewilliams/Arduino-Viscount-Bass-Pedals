@@ -6,7 +6,7 @@
 
 #define M_LERP_RATE 64
 
-long debounceDelay = 50;    // the debounce time; increase if the output flickers
+long debounceDelay = 50; // the debounce time; increase if the output flickers
 bool pedalIsDownForNote[NUM_KEYS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 bool debounceTimes[NUM_KEYS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 ADSR <CONTROL_RATE, M_LERP_RATE> envelope[NUM_KEYS];
@@ -78,7 +78,8 @@ void debugSerial() {
 
       int val = pedalIsDownForNote[i];
       int time = debounceTimes[i];
-      Serial.print("      " + val);
+      Serial.print("      " + noteNameFromPin(i));
+      Serial.print(": " + val);
       Serial.print(": " + time);
     }
 

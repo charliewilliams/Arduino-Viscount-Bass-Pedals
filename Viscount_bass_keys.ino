@@ -10,7 +10,10 @@ const static int debugMod = 1000;
 
 void setup() {
 
+  /* IF DEBUG */
   Serial.begin(9600);
+  /* ENDIF */
+  
   setupControl();
   setupAudio();
   startMozzi(CONTROL_RATE);
@@ -19,6 +22,9 @@ void setup() {
 void loop() {
 
   audioHook();
+
+  /* IF DEBUG */
   debugSerial();
+  /* ENDIF */
 }
 

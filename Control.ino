@@ -4,42 +4,42 @@
 
 #include <ADSR.h>
 
-#define M_LERP_RATE 64
-
 long debounceDelay = 50; // the debounce time; increase if the output flickers
 bool pedalIsDownForNote[NUM_KEYS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 bool debounceTimes[NUM_KEYS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-ADSR <CONTROL_RATE, M_LERP_RATE> envelope[NUM_KEYS];
+ADSR <CONTROL_RATE, AUDIO_RATE> envelope[NUM_KEYS];
 
 
 void setupControl() {
 
   for (int i = 0; i < NUM_KEYS; i++) {
-    
+
     pinMode(i, INPUT);
 
-    ADSR <CONTROL_RATE, M_LERP_RATE> env = ADSR <CONTROL_RATE, M_LERP_RATE>();
-    
-    env.setAttackLevel(255);
-    env.setDecayLevel(127);
-    env.setSustainLevel(127);
-    env.setReleaseLevel(0);
+    envelope[i] = ADSR <CONTROL_RATE, AUDIO_RATE>();
 
-    env.setAttackTime(10);
-    env.setDecayTime(127);
-    env.setSustainTime(65535);
-    env.setReleaseTime(500);
+    envelope[i].setADLevels(255, 127);
 
-    envelope[i] = env;
+    //    env.setAttackLevel(255);
+    //    env.setDecayLevel(127);
+    envelope[i].setSustainLevel(255);
+    envelope[i].setReleaseLevel(255);
+
+    envelope[i].setTimes(10, 250, 1000, 500);
+    //        env.setTimes(0, 0, 0, 0);
+    //    env.setAttackTime(10);
+    //    env.setDecayTime(127);
+    //    env.setSustainTime(65535);
+    //    env.setReleaseTime(500);
+
+    //    envelope[i] = env;
+    envelope[i].noteOn();
   }
 }
 
 void updateControl() {
-  
-  for (int i = 0; i < NUM_KEYS; i++) {
 
-    ADSR <CONTROL_RATE, M_LERP_RATE> env = envelope[i];
-    env.update(); // should this be inside the 'else' below?
+  for (int i = 0; i < NUM_KEYS; i++) {
 
     bool oldValue = pedalIsDownForNote[i];
 
@@ -47,15 +47,17 @@ void updateControl() {
     bool value = debouncePin(i, rawValue, oldValue);
 
     if (oldValue != value) {
-      
+
       pedalIsDownForNote[i] = value;
 
       if (!value) {
-        env.noteOn();
+        envelope[i].noteOn();
       } else {
-        env.noteOff();
+        envelope[i].noteOff();
       }
     }
+
+    envelope[i].update();
   }
 }
 
@@ -80,9 +82,9 @@ void debugSerial() {
     for (int i = 0; i < NUM_KEYS; i++) {
 
       int val = pedalIsDownForNote[i];
-      int time = debounceTimes[i];
-      
-      String s = " " + noteNameFromPin(i) + ": " + !val + " : " + time;
+      //      int time = debounceTimes[i];
+
+      String s = " " + noteNameFromPin(i) + ": " + (envelope[i].playing() ? "YES" : "no ");//!val;
       Serial.print(s);
     }
 

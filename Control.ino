@@ -15,9 +15,11 @@ ADSR <CONTROL_RATE, M_LERP_RATE> envelope[NUM_KEYS];
 void setupControl() {
 
   for (int i = 0; i < NUM_KEYS; i++) {
+    
+    pinMode(i, INPUT);
 
-    ADSR <CONTROL_RATE, M_LERP_RATE> env;// = ADSR<CONTROL_RATE>();
-
+    ADSR <CONTROL_RATE, M_LERP_RATE> env = ADSR <CONTROL_RATE, M_LERP_RATE>();
+    
     env.setAttackLevel(255);
     env.setDecayLevel(127);
     env.setSustainLevel(127);
@@ -33,7 +35,7 @@ void setupControl() {
 }
 
 void updateControl() {
-
+  
   for (int i = 0; i < NUM_KEYS; i++) {
 
     ADSR <CONTROL_RATE, M_LERP_RATE> env = envelope[i];
@@ -45,9 +47,10 @@ void updateControl() {
     bool value = debouncePin(i, rawValue, oldValue);
 
     if (oldValue != value) {
+      
       pedalIsDownForNote[i] = value;
 
-      if (value) {
+      if (!value) {
         env.noteOn();
       } else {
         env.noteOff();
@@ -78,9 +81,9 @@ void debugSerial() {
 
       int val = pedalIsDownForNote[i];
       int time = debounceTimes[i];
-      Serial.print("      " + noteNameFromPin(i));
-      Serial.print(": " + val);
-      Serial.print(": " + time);
+      
+      String s = " " + noteNameFromPin(i) + ": " + !val + " : " + time;
+      Serial.print(s);
     }
 
     Serial.println("");

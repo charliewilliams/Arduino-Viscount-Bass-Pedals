@@ -1,7 +1,7 @@
 
 String noteNameFromPin(int pin) {
   char names[12][3] = {"C ", "C#", "D ", "Eb", "E ", "F ", "F#", "G ", "Ab", "A ", "Bb", "B "};
-  return names[pin];
+  return names[pin % 12];
 
 }
 

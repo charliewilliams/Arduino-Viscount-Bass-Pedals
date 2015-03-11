@@ -25,7 +25,7 @@ int updateAudio() {
   int sample = 0.0;
 
   for (int i = 0; i < NUM_KEYS; i++) {
-    sample += oscils[i].next() * envelope[i].next();
+    sample += oscils[i].next() * env.next();
   }
 
   return sample;

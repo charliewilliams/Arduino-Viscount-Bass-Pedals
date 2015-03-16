@@ -1,6 +1,17 @@
 
+// Bass synth controlled by organ-donor Viscount pedals.
+// by Charlie Williams (@buildsucceeded)
+// and Rick Hewes (@rickhewes)
 
-//probably just use a 1 to 10 uF capacitor. Connect the + side to DAC/A14 and the - side to your mixer's input.
+// Have fun with this code, it's under a
+// Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+// Built on Mozzi by Tim Barrass
+// which is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. 
+
+// Notes:
+// This is written to run on the Teensyduino 3.1.
+// For DAC DC offset removal on the Teensy, use a 1 to 10 uF capacitor.
+// Connect the + side to DAC/A14 and the - side to your mixer's input.
 
 #define DEBUG 0
 

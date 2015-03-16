@@ -5,11 +5,11 @@
 #include <ADSR.h>
 #include <mozzi_rand.h>
 
+const static unsigned int UINT_MAX = 65535;
 const static long debounceDelay = 50; // the debounce time; increase if the output flickers
 bool pedalIsDownForNote[NUM_KEYS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 bool debounceTimes[NUM_KEYS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 ADSR <CONTROL_RATE, AUDIO_RATE> envelope[NUM_KEYS];
-//ADSR <CONTROL_RATE, AUDIO_RATE> env = ADSR <CONTROL_RATE, AUDIO_RATE>();
 
 
 void setupControl() {
@@ -24,7 +24,7 @@ void setupControl() {
     envelope[i].setDecayLevel(127);
     envelope[i].setSustainLevel(127);
     envelope[i].setReleaseLevel(0);
-    envelope[i].setTimes(20, 250, 1000, 500);
+    envelope[i].setTimes(10, 100, UINT_MAX, 500);
   }
 }
 
@@ -58,6 +58,7 @@ void updateControl() {
     envelope[i].update();
   }
   
+//  Serial.println(envelope[0].next());
   updateLED();
 }
 

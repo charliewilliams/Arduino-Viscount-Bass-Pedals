@@ -73,5 +73,10 @@ void updateLED() {
   analogWrite(PIN_R, val);
   analogWrite(PIN_G, val);
   analogWrite(PIN_B, val);
+  
+#if DEBUG
+  Serial.print(" rgb: ");
+  Serial.println(val);
+#endif
 }
 

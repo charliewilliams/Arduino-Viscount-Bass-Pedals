@@ -3,12 +3,13 @@
 // including debouncing
 
 #include <ADSR.h>
+#include <mozzi_rand.h>
 
 const static long debounceDelay = 50; // the debounce time; increase if the output flickers
 bool pedalIsDownForNote[NUM_KEYS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 bool debounceTimes[NUM_KEYS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 ADSR <CONTROL_RATE, AUDIO_RATE> envelope[NUM_KEYS];
-ADSR <CONTROL_RATE, AUDIO_RATE> env = ADSR <CONTROL_RATE, AUDIO_RATE>();
+//ADSR <CONTROL_RATE, AUDIO_RATE> env = ADSR <CONTROL_RATE, AUDIO_RATE>();
 
 
 void setupControl() {
@@ -19,12 +20,11 @@ void setupControl() {
 
     envelope[i] = ADSR <CONTROL_RATE, AUDIO_RATE>();
 
-    envelope[i].setADLevels(255, 127);
-//    envelope[i].setSustainLevel(255);
-//    envelope[i].setReleaseLevel(255);
-    envelope[i].setTimes(10, 250, 1000, 500);
-
-    envelope[i].noteOn();
+    envelope[i].setAttackLevel(255);
+    envelope[i].setDecayLevel(127);
+    envelope[i].setSustainLevel(127);
+    envelope[i].setReleaseLevel(0);
+    envelope[i].setTimes(20, 250, 1000, 500);
   }
 }
 
@@ -56,13 +56,6 @@ void updateControl() {
     }
 
     envelope[i].update();
-  }
-
-  env.update();
-  if (noteOnFound) {
-    env.noteOn();
-  } else if (noteOffFound) {
-    env.noteOff();
   }
   
   updateLED();

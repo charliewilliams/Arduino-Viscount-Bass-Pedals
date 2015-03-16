@@ -2,7 +2,7 @@
 
 //probably just use a 1 to 10 uF capacitor. Connect the + side to DAC/A14 and the - side to your mixer's input.
 
-#define DEBUG 1
+#define DEBUG 0
 
 #include <ADC.h>
 #include <MozziGuts.h>

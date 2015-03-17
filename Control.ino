@@ -40,7 +40,7 @@ void updateControl() {
     int rawValue = digitalRead(i);
     bool value = debouncePin(i, rawValue, oldValue);
 
-    if (oldValue != value) {
+    if (oldValue != value || envelope[i].playing()) {
 
       pedalIsDownForNote[i] = value;
 

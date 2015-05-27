@@ -1,7 +1,7 @@
 
-#define PIN_R 23
+#define PIN_R 21
 #define PIN_G 22
-#define PIN_B 21
+#define PIN_B 23
 
 #define noteColor0 {90, 0, 0} // C
 #define noteColor1 {9, 0, 20}
@@ -18,7 +18,9 @@
 
 //const static int whiteKeys[7][3] = {noteColor0, noteColor2, noteColor4, noteColor5, noteColor7, noteColor9, noteColor11};
 const static int noteColors[12][3] = {noteColor0, noteColor1, noteColor2, noteColor3, noteColor4, noteColor5, noteColor6, noteColor7, noteColor8, noteColor9, noteColor10, noteColor11};
-const static float brightness = 1.0;
+const static float brightness = 2.0;
+const static float breathingBrightness = 30.0;
+const static float breathingSpeed = 200.0;
 bool noteIsOn = false;
 int breathingCounter = 0;
 
@@ -69,7 +71,7 @@ void updateLED() {
 
   breathingCounter++;
 
-  float val = (exp(sin(breathingCounter / 200.0 * PI)) - 0.36787944) * 30.0;
+  float val = (exp(sin(breathingCounter / breathingSpeed * PI)) - 0.36787944) * breathingBrightness;
   analogWrite(PIN_R, val);
   analogWrite(PIN_G, val);
   analogWrite(PIN_B, val);

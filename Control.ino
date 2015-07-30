@@ -24,17 +24,17 @@ void setupControl() {
     envelope[i].setDecayLevel(127);
     envelope[i].setSustainLevel(64);
     envelope[i].setReleaseLevel(0);
-    envelope[i].setTimes(50, 100, UINT_MAX, 500);
+    envelope[i].setTimes(50, 100, UINT_MAX, 750);
     envelope[i].noteOff(); // or else you start with a bang
   }
 
   noiseEnvelope = ADSR <CONTROL_RATE, AUDIO_RATE>();
 
   noiseEnvelope.setAttackLevel(255);
-  noiseEnvelope.setDecayLevel(64);
+  noiseEnvelope.setDecayLevel(10);
   noiseEnvelope.setSustainLevel(0);
   noiseEnvelope.setReleaseLevel(0);
-  noiseEnvelope.setTimes(50, 100, 0, 10);
+  noiseEnvelope.setTimes(50, 50, 50, 50);
   noiseEnvelope.noteOff(); // or else you start with a bang
 }
 
@@ -44,6 +44,9 @@ void updateControl() {
   updateDebugNote();
   return;
 #endif
+
+//  bool noteOnFound = false;
+//  bool noteOffFound = false;
 
   for (int i = 0; i < NUM_KEYS; i++) {
 
@@ -57,6 +60,8 @@ void updateControl() {
       pedalIsDownForNote[i] = value;
 
       if (!value) {
+        oscil1.setFreq(freqs[NUM_KEYS - i - 1] / octave);
+        oscil2.setFreq((freqs[NUM_KEYS - i - 1] / (octave - 1)) * octaveDetune);
         envelope[i].noteOn();
         noiseEnvelope.noteOn();
         writeLED(i, true);
@@ -108,7 +113,9 @@ void updateDebugNote() {
     if (debugNoteOn) {
 
       envelope[debugNote].noteOn();
-//      noiseEnvelope.noteOn();
+      oscil1.setFreq(freqs[NUM_KEYS - debugNote - 1] / octave);
+      oscil2.setFreq(freqs[NUM_KEYS - debugNote - 1] / octave * octaveDetune);
+      noiseEnvelope.noteOn();
       Serial.print(debugNote);
       Serial.println(" ON");
 

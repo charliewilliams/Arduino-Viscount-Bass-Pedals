@@ -10,6 +10,7 @@ const static long debounceDelay = 50; // the debounce time; increase if the outp
 bool pedalIsDownForNote[NUM_KEYS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 bool debounceTimes[NUM_KEYS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 ADSR <CONTROL_RATE, AUDIO_RATE> envelope[NUM_KEYS];
+ADSR <CONTROL_RATE, AUDIO_RATE> noiseEnvelope;
 
 void setupControl() {
 
@@ -21,10 +22,20 @@ void setupControl() {
 
     envelope[i].setAttackLevel(255);
     envelope[i].setDecayLevel(127);
-    envelope[i].setSustainLevel(127);
+    envelope[i].setSustainLevel(64);
     envelope[i].setReleaseLevel(0);
-    envelope[i].setTimes(10, 100, UINT_MAX, 500);
+    envelope[i].setTimes(50, 100, UINT_MAX, 500);
+    envelope[i].noteOff(); // or else you start with a bang
   }
+
+  noiseEnvelope = ADSR <CONTROL_RATE, AUDIO_RATE>();
+
+  noiseEnvelope.setAttackLevel(255);
+  noiseEnvelope.setDecayLevel(64);
+  noiseEnvelope.setSustainLevel(0);
+  noiseEnvelope.setReleaseLevel(0);
+  noiseEnvelope.setTimes(50, 100, 0, 10);
+  noiseEnvelope.noteOff(); // or else you start with a bang
 }
 
 void updateControl() {
@@ -33,9 +44,6 @@ void updateControl() {
   updateDebugNote();
   return;
 #endif
-  
-  bool noteOnFound = false;
-  bool noteOffFound = false;
 
   for (int i = 0; i < NUM_KEYS; i++) {
 
@@ -50,11 +58,11 @@ void updateControl() {
 
       if (!value) {
         envelope[i].noteOn();
-        noteOnFound = true;
+        noiseEnvelope.noteOn();
         writeLED(i, true);
       } else {
         envelope[i].noteOff();
-        noteOffFound = true;
+        noiseEnvelope.noteOff();
         writeLED(0, false);
       }
     }
@@ -62,6 +70,7 @@ void updateControl() {
     envelope[i].update();
   }
 
+  noiseEnvelope.update();
   //  Serial.println(envelope[0].next());
   updateLED();
 }
@@ -84,26 +93,52 @@ bool debouncePin(int pin, bool rawValue, bool oldValue) {
 
 int debugTimer = 0;
 bool debugNoteOn = false;
-int debugNoteDuration = 25;
+int debugNoteDuration = 50;
 int debugNote = 0;
 
 void updateDebugNote() {
 
   debugTimer++;
+
   if (debugTimer > debugNoteDuration) {
+
     debugTimer = 0;
     debugNoteOn = !debugNoteOn;
-    
+
     if (debugNoteOn) {
-     envelope[debugNote].noteOn(); 
+
+      envelope[debugNote].noteOn();
+//      noiseEnvelope.noteOn();
+      Serial.print(debugNote);
+      Serial.println(" ON");
+
     } else {
+
       envelope[debugNote].noteOff();
+      noiseEnvelope.noteOff();
+      Serial.print(debugNote);
+      Serial.println(" OFF");
+      debugNote++;
+      if (debugNote >= NUM_KEYS) {
+        debugNote = 0;
+      }
+
     }
-    
-    pedalIsDownForNote[debugNote] = debugNoteOn;
   }
 
-  if (debugNoteOn) { //|| envelope[debugNote].playing()
-      envelope[debugNote].update();
+  if (debugNoteOn) {
+    envelope[debugNote].update();
+    noiseEnvelope.update();
+  }
+
+  for (int i = 0; i < NUM_KEYS; i++) {
+    if (envelope[i].playing()) {
+      envelope[i].update();
+    }
+
+  }
+
+  if (noiseEnvelope.playing()) {
+    noiseEnvelope.update();
   }
 }

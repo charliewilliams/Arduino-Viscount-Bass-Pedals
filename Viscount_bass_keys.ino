@@ -6,7 +6,7 @@
 // Have fun with this code, it's under a
 // Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
 // Built on Mozzi by Tim Barrass
-// which is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. 
+// which is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
 
 // Notes:
 // This is written to run on the Teensyduino 3.1.
@@ -39,7 +39,7 @@ void loop() {
   audioHook();
 
 #if DEBUG
-  debugSerial();
+//  debugSerial();
 #endif
 }
 

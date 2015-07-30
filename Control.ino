@@ -11,7 +11,6 @@ bool pedalIsDownForNote[NUM_KEYS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 bool debounceTimes[NUM_KEYS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 ADSR <CONTROL_RATE, AUDIO_RATE> envelope[NUM_KEYS];
 
-
 void setupControl() {
 
   for (int i = 0; i < NUM_KEYS; i++) {
@@ -30,6 +29,11 @@ void setupControl() {
 
 void updateControl() {
 
+#if DEBUG
+  updateDebugNote();
+  return;
+#endif
+  
   bool noteOnFound = false;
   bool noteOffFound = false;
 
@@ -57,8 +61,8 @@ void updateControl() {
 
     envelope[i].update();
   }
-  
-//  Serial.println(envelope[0].next());
+
+  //  Serial.println(envelope[0].next());
   updateLED();
 }
 
@@ -76,3 +80,30 @@ bool debouncePin(int pin, bool rawValue, bool oldValue) {
   return oldValue;
 }
 
+/* DEBUG NOTE AUTO-PLAY */
+
+int debugTimer = 0;
+bool debugNoteOn = false;
+int debugNoteDuration = 25;
+int debugNote = 0;
+
+void updateDebugNote() {
+
+  debugTimer++;
+  if (debugTimer > debugNoteDuration) {
+    debugTimer = 0;
+    debugNoteOn = !debugNoteOn;
+    
+    if (debugNoteOn) {
+     envelope[debugNote].noteOn(); 
+    } else {
+      envelope[debugNote].noteOff();
+    }
+    
+    pedalIsDownForNote[debugNote] = debugNoteOn;
+  }
+
+  if (debugNoteOn) { //|| envelope[debugNote].playing()
+      envelope[debugNote].update();
+  }
+}

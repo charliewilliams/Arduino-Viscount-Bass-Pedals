@@ -28,7 +28,7 @@ void setup() {
 #if DEBUG
   Serial.begin(9600);
 #endif
-  
+
   setupControl();
   setupAudio();
   startMozzi(CONTROL_RATE);

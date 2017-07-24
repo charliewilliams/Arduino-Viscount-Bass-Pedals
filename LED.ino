@@ -34,7 +34,7 @@ void writeLED(int noteNum, bool on) {
 
   if (!on) {
     noteIsOn = false;
-//    breathingCounter = 0;
+    //    breathingCounter = 0;
     analogWrite(PIN_R, 0);
     analogWrite(PIN_G, 0);
     analogWrite(PIN_B, 0);
@@ -52,14 +52,14 @@ void writeLED(int noteNum, bool on) {
   analogWrite(PIN_G, g * brightness);
   analogWrite(PIN_B, b * brightness);
 
-//#if DEBUG
-//  Serial.print(" r: ");
-//  Serial.print(r);
-//  Serial.print(" g: ");
-//  Serial.print(g);
-//  Serial.print(" b: ");
-//  Serial.println(b);
-//#endif
+  if (DEBUG) {
+    //  Serial.print(" r: ");
+    //  Serial.print(r);
+    //  Serial.print(" g: ");
+    //  Serial.print(g);
+    //  Serial.print(" b: ");
+    //  Serial.println(b);
+  }
 
 }
 
@@ -75,10 +75,10 @@ void updateLED() {
   analogWrite(PIN_R, val);
   analogWrite(PIN_G, val);
   analogWrite(PIN_B, val);
-  
-//#if DEBUG
-//  Serial.print(" rgb: ");
-//  Serial.println(val);
-//#endif
+
+  if (DEBUG) {
+    //  Serial.print(" rgb: ");
+    //  Serial.println(val);
+  }
 }
 

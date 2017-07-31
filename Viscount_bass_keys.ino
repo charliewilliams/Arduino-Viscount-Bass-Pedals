@@ -18,7 +18,7 @@ void setup() {
 
   for (int i = 0; i < NUM_KEYS; i++) {
     pinMode(i, INPUT); // INPUT_PULLUP
-    notePitches[i] = baseNote + i;
+    notePitches[i] = baseNote - i;
   }
 }
 

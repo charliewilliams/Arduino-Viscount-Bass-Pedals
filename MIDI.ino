@@ -44,31 +44,18 @@ void playNotes() {
       if (bitRead(pressedPedals, i)) {
 
         bitWrite(previousPedals, i , 1);
-        noteOn(0, notePitches[i], intensity);
+        usbMIDI.sendNoteOn(notePitches[i], intensity, 1);
+        Serial.print("Note on: "); Serial.print(i); Serial.print(" / "); Serial.println(notePitches[i]);
         writeLED(i, true);
       }
       else {
 
         bitWrite(previousPedals, i , 0);
-        noteOff(0, notePitches[i], 0);
+        usbMIDI.sendNoteOff(notePitches[i], intensity, 1);
+        Serial.print("Note off: "); Serial.print(i); Serial.print(" / "); Serial.println(notePitches[i]);
         writeLED(i, false);
       }
     }
   }
 }
 
-// First parameter is the event type (0x09 = note on, 0x08 = note off).
-// Second parameter is note-on/note-off, combined with the channel.
-// Channel can be anything between 0-15. Typically reported to the user as 1-16.
-// Third parameter is the note number (48 = middle C).
-// Fourth parameter is the velocity (64 = normal, 127 = fastest).
-
-void noteOn(byte channel, byte pitch, byte velocity) {
-  MIDI.sendNoteOn(pitch, velocity, channel);
-  Serial.println("Note on: " + pitch);
-}
-
-void noteOff(byte channel, byte pitch, byte velocity) {
-  MIDI.sendNoteOff(pitch, velocity, channel);
-  Serial.println("Note off: " + pitch);
-}

@@ -45,11 +45,13 @@ void playNotes() {
 
         bitWrite(previousPedals, i , 1);
         noteOn(0, notePitches[i], intensity);
+        writeLED(i, true);
       }
       else {
 
         bitWrite(previousPedals, i , 0);
         noteOff(0, notePitches[i], 0);
+        writeLED(i, false);
       }
     }
   }

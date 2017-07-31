@@ -6,7 +6,7 @@
 #define noteColor0 {90, 0, 0} // C
 #define noteColor1 {9, 0, 20}
 #define noteColor2 {255, 15, 0} // D
-#define noteColor3 {10, 0, 10} //.
+#define noteColor3 {10, 0, 10}
 #define noteColor4 {211, 84, 0} // E
 #define noteColor5 {0, 10, 1} // F
 #define noteColor6 {40, 40, 40}
@@ -17,10 +17,12 @@
 #define noteColor11 {200, 0, 18} // B
 
 //const static int whiteKeys[7][3] = {noteColor0, noteColor2, noteColor4, noteColor5, noteColor7, noteColor9, noteColor11};
-const static int noteColors[12][3] = {noteColor0, noteColor1, noteColor2, noteColor3, noteColor4, noteColor5, noteColor6, noteColor7, noteColor8, noteColor9, noteColor10, noteColor11};
+const static int noteColors[12][3] = {noteColor0, noteColor1, noteColor2, noteColor3, noteColor4, noteColor5, noteColor6,
+                                      noteColor7, noteColor8, noteColor9, noteColor10, noteColor11
+                                     };
 const static float brightness = 2.0;
 const static float breathingBrightness = 30.0;
-const static float breathingSpeed = 200.0;
+const static float breathingSpeed = 10000.0;
 bool noteIsOn = false;
 int breathingCounter = 0;
 

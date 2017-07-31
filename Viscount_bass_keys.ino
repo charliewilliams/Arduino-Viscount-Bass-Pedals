@@ -18,7 +18,7 @@ void setup() {
   MIDI.begin();
   Serial.begin(9600);
 
-  Serial.println("HELLO WORLD");
+  Serial.println("STARTUP CHIME: BONNNNNNNNG");
 
   for (int i = 0; i < NUM_KEYS; i++) {
     pinMode(i, INPUT); // INPUT_PULLUP

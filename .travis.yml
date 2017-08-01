@@ -21,14 +21,7 @@ env:
         - BUILD_TYPE=Debug
     matrix:
         - BUILD_UNIT_TESTS=1
-        - PLATFORMIO_CI_SRC=examples/Basic_IO
-        - PLATFORMIO_CI_SRC=examples/Bench
-        - PLATFORMIO_CI_SRC=examples/Callbacks
-        - PLATFORMIO_CI_SRC=examples/DualMerger
-        - PLATFORMIO_CI_SRC=examples/Input
-        - PLATFORMIO_CI_SRC=examples/MidiUSB REQUIRES_USB=1
-        - PLATFORMIO_CI_SRC=examples/RPN_NRPN
-        - PLATFORMIO_CI_SRC=examples/SimpleSynth
+        # - PLATFORMIO_CI_SRC=Viscount_bass_keys
 
 addons:
     apt:

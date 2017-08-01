@@ -1,4 +1,5 @@
-# Arduino + Viscount Bass Pedals
+# Arduino + Viscount Bass Pedals 
+[![Build Status](https://travis-ci.org/charliewilliams/Arduino-Viscount-Bass-Pedals.svg?branch=master)](https://travis-ci.org/charliewilliams/Arduino-Viscount-Bass-Pedals)
 
 ![Photo of the pedals](http://3.bp.blogspot.com/-8wui5eTmD3g/UzSsEelbdQI/AAAAAAAAA8Q/WsbQeW-A-D8/s3200/IMG_6977.jpg)
 

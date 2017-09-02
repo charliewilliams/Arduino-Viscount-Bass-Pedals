@@ -41,17 +41,19 @@ void playNotes() {
 
     if (bitRead(pressedPedals, i) != bitRead(previousPedals, i)) {
 
+      int note = notePitches[i] + octave * 12;
+
       if (bitRead(pressedPedals, i)) {
 
         bitWrite(previousPedals, i , 1);
-        usbMIDI.sendNoteOn(notePitches[i], intensity, 1);
+        usbMIDI.sendNoteOn(note, intensity, 1);
         Serial.print("Note on: "); Serial.print(i); Serial.print(" / "); Serial.println(notePitches[i]);
         writeLED(i, true);
       }
       else {
 
         bitWrite(previousPedals, i , 0);
-        usbMIDI.sendNoteOff(notePitches[i], intensity, 1);
+        usbMIDI.sendNoteOff(note, intensity, 1);
         Serial.print("Note off: "); Serial.print(i); Serial.print(" / "); Serial.println(notePitches[i]);
         writeLED(i, false);
       }

@@ -8,6 +8,7 @@
 
 const static int NUM_KEYS = 13;
 const static int baseNote = 36; // C2
+static int octave = 0;
 byte notePitches[NUM_KEYS];
 
 void setup() {
@@ -15,6 +16,8 @@ void setup() {
   Serial.begin(9600); // 31250
 
   Serial.println("STARTUP CHIME: BONNNNNNNNG");
+
+  Keyboard.begin();
 
   for (int i = 0; i < NUM_KEYS; i++) {
     pinMode(i, INPUT); // INPUT_PULLUP
@@ -25,6 +28,7 @@ void setup() {
 void loop() {
 
   midiTick();
+  updateControls();
   updateLED();
 }
 

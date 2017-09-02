@@ -35,13 +35,11 @@ void updateControls() {
   }
   else if (buttons.onPress(ARROW_UP)) {
     Serial.println("UP arrow");
-    Keyboard.set_key1(KEY_UP);
-    Keyboard.send_now();
+    Keyboard.print(KEY_UP);
   }
   else if (buttons.onPress(ARROW_DOWN)) {
     Serial.println("DOWN arrow");
-    Keyboard.set_key1(KEY_DOWN);
-    Keyboard.send_now();
+    Keyboard.print(KEY_DOWN);
   }
 }
 

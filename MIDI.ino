@@ -47,6 +47,7 @@ void playNotes() {
 
         bitWrite(previousPedals, i , 1);
         usbMIDI.sendNoteOn(note, intensity, 1);
+        MIDI.sendNoteOn(note, intensity, 0);
         Serial.print("Note on: "); Serial.print(i); Serial.print(" / "); Serial.println(notePitches[i]);
         writeLED(i, true);
       }
@@ -54,6 +55,7 @@ void playNotes() {
 
         bitWrite(previousPedals, i , 0);
         usbMIDI.sendNoteOff(note, intensity, 1);
+        MIDI.sendNoteOff(note, intensity, 0);
         Serial.print("Note off: "); Serial.print(i); Serial.print(" / "); Serial.println(notePitches[i]);
         writeLED(i, false);
       }

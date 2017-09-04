@@ -6,12 +6,18 @@
 // Have fun with this code, it's under a
 // Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
 
+#include <MIDI.h>
+MIDI_CREATE_DEFAULT_INSTANCE();
+
+
 const static int NUM_KEYS = 13;
 const static int baseNote = 36; // C2
 static int octave = 0;
 byte notePitches[NUM_KEYS];
 
 void setup() {
+
+  MIDI.begin();
 
   Serial.begin(9600); // 31250
 

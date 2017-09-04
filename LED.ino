@@ -16,7 +16,6 @@
 #define noteColor10 {20, 0, 0}
 #define noteColor11 {200, 0, 18} // B
 
-//const static int whiteKeys[7][3] = {noteColor0, noteColor2, noteColor4, noteColor5, noteColor7, noteColor9, noteColor11};
 const static int noteColors[12][3] = {noteColor0, noteColor1, noteColor2, noteColor3, noteColor4, noteColor5, noteColor6,
                                       noteColor7, noteColor8, noteColor9, noteColor10, noteColor11
                                      };
@@ -36,7 +35,7 @@ void writeLED(int noteNum, bool on) {
 
   if (!on) {
     noteIsOn = false;
-    //    breathingCounter = 0;
+
     analogWrite(PIN_R, 0);
     analogWrite(PIN_G, 0);
     analogWrite(PIN_B, 0);

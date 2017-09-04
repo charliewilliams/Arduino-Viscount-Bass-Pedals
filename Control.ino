@@ -25,30 +25,31 @@ AnalogMultiButton buttons(BUTTONS_PIN, BUTTONS_TOTAL, BUTTONS_VALUES);
 
 void updateControls() {
 
-//  if (millis() - lastMillis > 1000) {
-//    lastMillis = millis();
-//    Serial.println(analogRead(BUTTONS_PIN));
-//  }
+  /* DIAGNOSTIC */
+  //  if (millis() - lastMillis > 1000) {
+  //    lastMillis = millis();
+  //    Serial.println(analogRead(BUTTONS_PIN));
+  //  }
 
-    buttons.update();
-  
-    if (buttons.onPress(OCTAVE_DOWN_BTN)) {
-      Serial.println("Octave DOWN");
-      octave--;
-    }
-    else if (buttons.onPress(OCTAVE_UP_BTN)) {
-      Serial.println("Octave UP");
-      octave++;
-    }
-    else if (buttons.onPress(ARROW_UP)) {
-      Serial.println("UP arrow");
-      Keyboard.press(KEY_UP_ARROW);
-      Keyboard.release(KEY_UP_ARROW);
-    }
-    else if (buttons.onPress(ARROW_DOWN)) {
-      Serial.println("DOWN arrow");
-      Keyboard.press(KEY_DOWN_ARROW);
-      Keyboard.release(KEY_DOWN_ARROW);
-    }
+  buttons.update();
+
+  if (buttons.onPress(OCTAVE_DOWN_BTN)) {
+    Serial.println("Octave DOWN");
+    octave--;
+  }
+  else if (buttons.onPress(OCTAVE_UP_BTN)) {
+    Serial.println("Octave UP");
+    octave++;
+  }
+  else if (buttons.onPress(ARROW_UP)) {
+    Serial.println("UP arrow");
+    Keyboard.press(KEY_UP_ARROW);
+    Keyboard.release(KEY_UP_ARROW);
+  }
+  else if (buttons.onPress(ARROW_DOWN)) {
+    Serial.println("DOWN arrow");
+    Keyboard.press(KEY_DOWN_ARROW);
+    Keyboard.release(KEY_DOWN_ARROW);
+  }
 }
 

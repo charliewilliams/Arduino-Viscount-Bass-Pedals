@@ -29,6 +29,8 @@ void setup() {
     pinMode(i, INPUT); // INPUT_PULLUP
     notePitches[i] = baseNote - i;
   }
+
+  setupLED();
 }
 
 void loop() {

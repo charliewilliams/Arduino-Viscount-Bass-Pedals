@@ -1,7 +1,8 @@
 
-#define PIN_R 21
-#define PIN_G 22
-#define PIN_B 23
+const static int board_led = 13;
+const static int PIN_R = 21;  // yellow wire
+const static int PIN_G = 22;  // green wire
+const static int PIN_B = 23;  // blue wire
 
 #define noteColor0 {90, 0, 0} // C
 #define noteColor1 {9, 0, 20}
@@ -26,9 +27,12 @@ bool noteIsOn = false;
 int breathingCounter = 0;
 
 void setupLED() {
+
   analogWrite(PIN_R, 0);
   analogWrite(PIN_G, 0);
   analogWrite(PIN_B, 0);
+  pinMode(board_led, OUTPUT);
+  digitalWrite(board_led, HIGH);
 }
 
 void writeLED(int noteNum, bool on) {
@@ -54,6 +58,8 @@ void writeLED(int noteNum, bool on) {
   analogWrite(PIN_B, b * brightness);
 }
 
+boolean boardLEDisOn = true;
+
 void updateLED() {
 
   if (noteIsOn) {
@@ -66,5 +72,11 @@ void updateLED() {
   analogWrite(PIN_R, val);
   analogWrite(PIN_G, val);
   analogWrite(PIN_B, val);
+
+  if (breathingCounter % 1000 == 0) {
+    boardLEDisOn = !boardLEDisOn;
+
+    digitalWrite(board_led, boardLEDisOn ? HIGH : LOW);
+  }
 }
 

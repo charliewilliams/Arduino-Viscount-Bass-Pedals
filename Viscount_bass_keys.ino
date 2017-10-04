@@ -11,22 +11,24 @@ MIDI_CREATE_DEFAULT_INSTANCE();
 
 
 const static int NUM_KEYS = 13;
+const static int pinMap[NUM_KEYS] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 16};
 const static int baseNote = 36; // C2
-int octave = 0;
-byte notePitches[NUM_KEYS];
+static int octave = 0;
+static byte notePitches[NUM_KEYS];
 
 void setup() {
 
   MIDI.begin();
 
-  Serial.begin(9600);
+  Serial.begin(31250);
 
   Serial.println("STARTUP CHIME: BONNNNNNNNG");
 
   Keyboard.begin();
 
   for (int i = 0; i < NUM_KEYS; i++) {
-    pinMode(i, INPUT); // INPUT_PULLUP
+    int pin = pinMap[i];
+    pinMode(pin, INPUT_PULLUP);
     notePitches[i] = baseNote - i;
   }
 

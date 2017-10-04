@@ -58,9 +58,14 @@ void writeLED(int noteNum, bool on) {
   analogWrite(PIN_B, b * brightness);
 }
 
-boolean boardLEDisOn = true;
+static boolean boardLEDisOn = true;
 
 void updateLED() {
+
+  if (breathingCounter % 2 == 0) {
+    boardLEDisOn = !boardLEDisOn;
+    digitalWrite(board_led, boardLEDisOn ? HIGH : LOW);
+  }
 
   if (noteIsOn) {
     return;
@@ -72,11 +77,5 @@ void updateLED() {
   analogWrite(PIN_R, val);
   analogWrite(PIN_G, val);
   analogWrite(PIN_B, val);
-
-  if (breathingCounter % 1000 == 0) {
-    boardLEDisOn = !boardLEDisOn;
-
-    digitalWrite(board_led, boardLEDisOn ? HIGH : LOW);
-  }
 }
 

@@ -6,7 +6,7 @@ const int BUTTONS_TOTAL = 4;
 // find out what the value of analogRead is when you press each of your buttons and put them in this array
 // you can find this out by putting Serial.println(analogRead(BUTTONS_PIN)); in your loop() and opening the serial monitor to see the values
 // make sure they are in order of smallest to largest
-const int BUTTONS_VALUES[BUTTONS_TOTAL] = {0, 320, 495, 597};
+const int BUTTONS_VALUES[BUTTONS_TOTAL] = {1, 30, 57, 84};
 
 // you can also define constants for each of your buttons, which makes your code easier to read
 // define these in the same order as the numbers in your BUTTONS_VALUES array, so whichever button has the smallest analogRead() number should come first
@@ -21,15 +21,20 @@ AnalogMultiButton buttons(BUTTONS_PIN, BUTTONS_TOTAL, BUTTONS_VALUES);
 // pass a fourth parameter to set the debounce time in milliseconds
 // this defaults to 20 and can be increased if you're working with particularly bouncy buttons
 
-//int lastMillis = 0;
+int lastMillis = 0;
+
+void setupControls() {
+
+  pinMode(BUTTONS_PIN, INPUT_PULLUP);
+}
 
 void updateControls() {
 
   /* DIAGNOSTIC */
-  //  if (millis() - lastMillis > 1000) {
-  //    lastMillis = millis();
-  //    Serial.println(analogRead(BUTTONS_PIN));
-  //  }
+//    if (millis() - lastMillis > 1000) {
+//      lastMillis = millis();
+//      Serial.println(analogRead(BUTTONS_PIN));
+//    }
 
   buttons.update();
 

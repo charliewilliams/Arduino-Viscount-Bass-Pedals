@@ -21,8 +21,8 @@ const static int noteColors[12][3] = {noteColor0, noteColor1, noteColor2, noteCo
                                       noteColor7, noteColor8, noteColor9, noteColor10, noteColor11
                                      };
 const static float brightness = 2.0;
-const static float breathingBrightness = 30.0;
-const static float breathingSpeed = 10000.0;
+const static float breathingBrightness = 10.0;
+const static float breathingSpeed = 10000;
 bool noteIsOn = false;
 int breathingCounter = 0;
 
@@ -54,15 +54,15 @@ void writeLED(int noteNum, bool on) {
   int b = color[2];
 
   analogWrite(PIN_R, r * brightness);
-  analogWrite(PIN_G, g * brightness);
-  analogWrite(PIN_B, b * brightness);
+  analogWrite(PIN_G, g * brightness * 0.5);
+  analogWrite(PIN_B, b * brightness * 0.75);
 }
 
 static boolean boardLEDisOn = true;
 
 void updateLED() {
 
-  if (breathingCounter % 2 == 0) {
+  if (breathingCounter % 2000 == 0) {
     boardLEDisOn = !boardLEDisOn;
     digitalWrite(board_led, boardLEDisOn ? HIGH : LOW);
   }

@@ -12,18 +12,15 @@ MIDI_CREATE_DEFAULT_INSTANCE();
 
 const static int NUM_KEYS = 13;
 const static int pinMap[NUM_KEYS] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 16};
+static byte notePitches[NUM_KEYS];
 const static int baseNote = 36; // C2
 static int octave = 0;
-static byte notePitches[NUM_KEYS];
 
 void setup() {
 
   MIDI.begin();
-
   Serial.begin(31250);
-
   Serial.println("STARTUP CHIME: BONNNNNNNNG");
-
   Keyboard.begin();
 
   for (int i = 0; i < NUM_KEYS; i++) {
@@ -32,6 +29,7 @@ void setup() {
     notePitches[i] = baseNote - i;
   }
 
+  setupControls();
   setupLED();
 }
 
@@ -40,5 +38,7 @@ void loop() {
   midiTick();
   updateControls();
   updateLED();
+
+//  midiTest();
 }
 

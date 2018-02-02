@@ -18,7 +18,7 @@ void readPedals() {
 
   for (int i = 0; i < NUM_KEYS; i++) {
 
-    if (digitalRead(i) == LOW) {
+    if (digitalRead(i) == HIGH) {
       bitWrite(pressedPedals, i, 1);
       delay(50);
     }

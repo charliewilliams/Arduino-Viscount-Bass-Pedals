@@ -64,7 +64,7 @@ void updateLED() {
 
   if (breathingCounter % 2000 == 0) {
     boardLEDisOn = !boardLEDisOn;
-    digitalWrite(board_led, boardLEDisOn ? HIGH : LOW);
+//    digitalWrite(board_led, boardLEDisOn ? HIGH : LOW);
   }
 
   if (noteIsOn) {

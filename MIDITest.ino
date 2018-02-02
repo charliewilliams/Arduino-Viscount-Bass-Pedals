@@ -42,20 +42,20 @@ void midiTest() {
 
 void midiTestUSB(boolean turnOn) {
 
-  while (usbMIDI.read()) {};
-
-  if (turnOn) {
-
-    Serial.println("NoteOn USB");
-    usbMIDI.sendNoteOn(note, velocity, channel);
-    digitalWrite(board_led, HIGH);
-
-  } else {
-
-    Serial.println("NoteOff USB");
-    usbMIDI.sendNoteOff(note, velocity, channel);
-    digitalWrite(board_led, LOW);
-  }
+//  while (usbMIDI.read()) {};
+//
+//  if (turnOn) {
+//
+//    Serial.println("NoteOn USB");
+//    usbMIDI.sendNoteOn(note, velocity, channel);
+//    digitalWrite(board_led, HIGH);
+//
+//  } else {
+//
+//    Serial.println("NoteOff USB");
+//    usbMIDI.sendNoteOff(note, velocity, channel);
+//    digitalWrite(board_led, LOW);
+//  }
 }
 
 

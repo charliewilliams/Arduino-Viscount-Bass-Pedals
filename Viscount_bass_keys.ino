@@ -11,7 +11,7 @@ MIDI_CREATE_DEFAULT_INSTANCE();
 
 
 const static int NUM_KEYS = 13;
-const static int pinMap[NUM_KEYS] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}; //{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 16};
+const static int pinMap[NUM_KEYS] = {12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
 static byte notePitches[NUM_KEYS];
 const static int baseNote = 36; // C2
 static int octave = 0;
@@ -30,14 +30,14 @@ void setup() {
   }
 
   setupControls();
-//  setupLED();
+  setupLED();
 }
 
 void loop() {
 
   midiTick();
   updateControls();
-//  updateLED();
+  updateLED();
 
 //  midiTest();
 }

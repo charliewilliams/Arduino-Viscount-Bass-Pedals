@@ -1,8 +1,8 @@
 
 const static int board_led = 13;
-const static int PIN_R = 21;  // yellow wire
+const static int PIN_R = 23; // 21;  // yellow wire
 const static int PIN_G = 22;  // green wire
-const static int PIN_B = 23;  // blue wire
+const static int PIN_B = 20; // 23 // blue wire
 
 #define noteColor0 {90, 0, 0} // C
 #define noteColor1 {9, 0, 20}
@@ -22,7 +22,7 @@ const static int noteColors[12][3] = {noteColor0, noteColor1, noteColor2, noteCo
                                      };
 const static float brightness = 2.0;
 const static float breathingBrightness = 10.0;
-const static float breathingSpeed = 10000;
+const static float breathingSpeed = 1000;
 bool noteIsOn = false;
 int breathingCounter = 0;
 
@@ -64,7 +64,7 @@ void updateLED() {
 
   if (breathingCounter % 2000 == 0) {
     boardLEDisOn = !boardLEDisOn;
-//    digitalWrite(board_led, boardLEDisOn ? HIGH : LOW);
+    digitalWrite(board_led, boardLEDisOn ? HIGH : LOW);
   }
 
   if (noteIsOn) {
@@ -74,8 +74,8 @@ void updateLED() {
   breathingCounter++;
 
   float val = (exp(sin(breathingCounter / breathingSpeed * PI)) - 0.36787944) * breathingBrightness;
-  analogWrite(PIN_R, val);
+  analogWrite(PIN_R, val * 5);
   analogWrite(PIN_G, val);
-  analogWrite(PIN_B, val);
+  analogWrite(PIN_B, 768);
 }
 

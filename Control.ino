@@ -1,6 +1,6 @@
 #include <AnalogMultiButton.h>
 
-const int BUTTONS_PIN = 14; //A0; //14;
+const int BUTTONS_PIN = A0; //14;
 const int BUTTONS_TOTAL = 4;
 
 // find out what the value of analogRead is when you press each of your buttons and put them in this array
@@ -12,8 +12,8 @@ const int BUTTONS_VALUES[BUTTONS_TOTAL] = {0, 277, 437, 540};
 // define these in the same order as the numbers in your BUTTONS_VALUES array, so whichever button has the smallest analogRead() number should come first
 const int OCTAVE_DOWN_BTN = 0;
 const int OCTAVE_UP_BTN = 1;
-const int ARROW_UP = 2;
-const int ARROW_DOWN = 3;
+const int ARROW_DOWN = 2;
+const int ARROW_UP = 3;
 
 // make an AnalogMultiButton object, pass in the pin, total and values array
 AnalogMultiButton buttons(BUTTONS_PIN, BUTTONS_TOTAL, BUTTONS_VALUES);
@@ -31,10 +31,11 @@ void setupControls() {
 void updateControls() {
 
   /* DIAGNOSTIC */
-//    if (millis() - lastMillis > 100) {
-//      lastMillis = millis();
-//      Serial.println(analogRead(BUTTONS_PIN));
-//    }
+//  if (millis() - lastMillis > 100) {
+//    lastMillis = millis();
+//    Serial.println(analogRead(BUTTONS_PIN));
+//  }
+//  return;
 
   buttons.update();
 
@@ -48,13 +49,13 @@ void updateControls() {
   }
   else if (buttons.onPress(ARROW_UP)) {
     Serial.println("UP arrow");
-//    Keyboard.press(KEY_UP_ARROW);
-//    Keyboard.release(KEY_UP_ARROW);
+    Keyboard.press(KEY_UP_ARROW);
+    Keyboard.release(KEY_UP_ARROW);
   }
   else if (buttons.onPress(ARROW_DOWN)) {
     Serial.println("DOWN arrow");
-//    Keyboard.press(KEY_DOWN_ARROW);
-//    Keyboard.release(KEY_DOWN_ARROW);
+    Keyboard.press(KEY_DOWN_ARROW);
+    Keyboard.release(KEY_DOWN_ARROW);
   }
 }
 

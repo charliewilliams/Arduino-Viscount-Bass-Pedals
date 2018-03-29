@@ -22,7 +22,7 @@ const static int noteColors[12][3] = {noteColor0, noteColor1, noteColor2, noteCo
                                      };
 const static float brightness = 2.0;
 const static float breathingBrightness = 10.0;
-const static float breathingSpeed = 1000;
+const static float breathingSpeed = 4000; // inverted; higher numbers breathe slower
 bool noteIsOn = false;
 int breathingCounter = 0;
 

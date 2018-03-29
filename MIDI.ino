@@ -30,7 +30,7 @@ void readPedals() {
 
 // TODO future expansion
 void readIntensity() {
-  
+
   //  int val = analogRead(intensityPot);
   //  intensity = (uint8_t) (map(val, 0, 1023, 0, 127));
 }
@@ -41,6 +41,7 @@ void playNotes() {
 
     if (bitRead(pressedPedals, i) != bitRead(previousPedals, i)) {
 
+      int pedal = notePitches[i];
       int note = notePitches[i] + octave * 12;
 
       if (bitRead(pressedPedals, i)) {
@@ -48,7 +49,7 @@ void playNotes() {
         bitWrite(previousPedals, i , 1);
         usbMIDI.sendNoteOn(note, intensity, 1);
         MIDI.sendNoteOn(note, intensity, 0);
-        Serial.print("Note on: "); Serial.print(i); Serial.print(" / "); Serial.println(notePitches[i]);
+        Serial.print("Note on: "); Serial.print(pedal); Serial.print(" / "); Serial.println(note);
         writeLED(i, true);
       }
       else {
@@ -56,7 +57,7 @@ void playNotes() {
         bitWrite(previousPedals, i , 0);
         usbMIDI.sendNoteOff(note, intensity, 1);
         MIDI.sendNoteOff(note, intensity, 0);
-        Serial.print("Note off: "); Serial.print(i); Serial.print(" / "); Serial.println(notePitches[i]);
+        Serial.print("Note off: "); Serial.print(pedal); Serial.print(" / "); Serial.println(note);
         writeLED(i, false);
       }
     }
